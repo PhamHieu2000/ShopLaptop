@@ -1,0 +1,27 @@
+package controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dao.OrderDao;
+import model.Order;
+@WebServlet(urlPatterns = {"/cancelorder"})
+
+public class CancelOrderController extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int orderId=Integer.parseInt(req.getParameter("orderId")) ;
+		OrderDao orderDao=new OrderDao();
+		Order order= (Order)orderDao.getById(orderId);
+		System.out.println(order);
+		order.setStatus(3);
+		orderDao.update(order);
+		resp.sendRedirect(req.getContextPath() + "/orderdetail");
+
+	}
+}

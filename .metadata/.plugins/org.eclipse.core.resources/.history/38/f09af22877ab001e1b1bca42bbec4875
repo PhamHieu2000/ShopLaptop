@@ -1,0 +1,16 @@
+package dto;
+
+import java.time.LocalDate;
+
+public class FeedbackDto {
+	private int id;
+	private String name;
+	private String email;
+	private String subject;
+	private String message;
+	private LocalDate created_at;
+	private int status;
+	private int rating;
+	private int product_id;
+	private int user_id;
+}

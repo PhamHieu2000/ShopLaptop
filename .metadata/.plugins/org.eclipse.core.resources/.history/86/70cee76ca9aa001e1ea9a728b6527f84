@@ -1,0 +1,87 @@
+package dto;
+
+public class WishlistProductDto {
+	int wishlist_id;
+	int product_id;
+	int user_id;
+	String name_product;
+	Long price;
+	Long discount;
+	int category_id;
+	String thumbnail;
+	String fullname;
+	String numberphone;
+	String address;
+	String email;
+	
+	public WishlistProductDto() {
+	}
+	public WishlistProductDto(int wishlist_id, int product_id, int user_id, String name_product, Long price,
+			Long discount, int category_id, String thumbnail) {
+		super();
+		this.wishlist_id = wishlist_id;
+		this.product_id = product_id;
+		this.user_id = user_id;
+		this.name_product = name_product;
+		this.price = price;
+		this.discount = discount;
+		this.category_id = category_id;
+		this.thumbnail = thumbnail;
+	}
+	public int getWishlist_id() {
+		return wishlist_id;
+	}
+	public void setWishlist_id(int wishlist_id) {
+		this.wishlist_id = wishlist_id;
+	}
+	public int getProduct_id() {
+		return product_id;
+	}
+	public void setProduct_id(int product_id) {
+		this.product_id = product_id;
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	public String getName_product() {
+		return name_product;
+	}
+	public void setName_product(String name_product) {
+		this.name_product = name_product;
+	}
+	public Long getPrice() {
+		return price;
+	}
+	public void setPrice(Long price) {
+		this.price = price;
+	}
+	public Long getDiscount() {
+		return discount;
+	}
+	public void setDiscount(Long discount) {
+		this.discount = discount;
+	}
+	public int getCategory_id() {
+		return category_id;
+	}
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	@Override
+	public String toString() {
+		return "WishlistProductDto [wishlist_id=" + wishlist_id + ", product_id=" + product_id + ", user_id=" + user_id
+				+ ", name_product=" + name_product + ", price=" + price + ", discount=" + discount + ", category_id="
+				+ category_id + ", thumbnail=" + thumbnail + "]";
+	}
+	
+	
+}

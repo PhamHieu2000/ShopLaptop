@@ -1,0 +1,42 @@
+package controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dao.ProductDao;
+import model.Product;
+
+@WebServlet(urlPatterns = {"/filterbyprice"})
+
+public class FilterByPrice extends HttpServlet {
+ @Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+
+	 // TODO Auto-generated method stub
+	 String key =req.getParameter("key");
+	 String category_id =req.getParameter("key");
+
+	 String[] partskey = key.split("-"); // parts = ["Hello", "World"]
+	 List<Product> products= new ArrayList<>();
+	 List<Product> productfilter= new ArrayList<>();
+	 ProductDao productDao=new ProductDao();
+	 products=productDao.getAllProduct();
+	 for(Product product: products) {
+		 if(product.getPrice()>Long.parseLong(partskey[0]) && product.getPrice()<Long.parseLong(partskey[1])) {
+			 productfilter.add(product);
+			 
+		 }
+	 }
+		req.setAttribute("listProduct", productfilter);
+		req.getRequestDispatcher("/views/client/listproduct.jsp").forward(req, resp);
+
+ }
+}

@@ -1,0 +1,137 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:url value="/views/client" var="url"></c:url>
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Electro - HTML Ecommerce Template</title>
+
+ 		<!-- Google font -->
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+ 		<!-- Bootstrap -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/bootstrap.min.css"/>
+
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/slick.css"/>
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/slick-theme.css"/>
+
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/nouislider.min.css"/>
+
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="${url}/css/font-awesome.min.css">
+
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/style.css"/>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    </head>
+	<body>
+				<jsp:include page="fragment/nevbar.jsp"></jsp:include>
+				<div class="container">
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">Id</th>
+				      <th scope="col">Họ và tên</th>
+				      <th scope="col">Tên đăng nhập</th>
+				      <th scope="col">Email</th>
+				      <th scope="col">Số điện thoại</th>
+				      <th scope="col">Địa chỉ</th>
+				      <th scope="col">Quyền</th>
+				      <th scope="col"></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  <c:forEach var ="data" items="${listUser}">
+				  
+				  <tr>
+				      
+				      <td>${data.id }</td>
+				      <td><input class="input" id="fullname-${data.id}" type="text" name="fullname-${data.id}" value="${data.fullname }" ></td>								
+				      <td><input class="input" id="username-${data.id}" type="text" name="username-${data.id}" value="${data.username }" ></td>								
+				      <td><input class="input" id="email-${data.id}" type="text" name="email-${data.id}" value="${data.email }" ></td>								
+				      <td><input class="input" id="phonenumber-${data.id}" type="text" name="phonenumber-${data.id}" value="${data.phonenumber }" ></td>								
+				      <td><input class="input" id="address-${data.id}" type="text" name="address-${data.id}" value="${data.address }" ></td>								
+				      <td>
+				      <select  class="form-select roleSelect" style="padding:8px">
+				      	<c:if test="${data.role_id==1}">
+				      	  <option selected value="1">admin</option>
+						  <option value="2">user</option>
+						  </c:if>
+						<c:if test="${data.role_id==2}">
+				      	  <option  value="1">admin</option>
+						  <option selected value="2">user</option>
+						  </c:if>
+						</select>
+						</td>
+				       <td class="text-center" ><i onclick="saveUser(this,${data.id })" style="padding: 3px;cursor: pointer;" class="fa-solid fa-floppy-disk"></i> <i onclick="deleteUser(${data.id })" class="fa-solid fa-x" style="color:red;cursor: pointer;"></i></td>
+				    </tr>
+				   
+				  </c:forEach>
+				    
+				  </tbody>
+			</table>
+				</div>
+				<jsp:include page="fragment/footer.jsp"></jsp:include>
+				
+
+</body>
+</html>
+<script>
+	function saveUser(button,id) {
+	    var fullname = document.getElementById("fullname-"+id).value;
+	    var username = document.getElementById("username-"+id).value;
+	    var email = document.getElementById("email-"+id).value;
+	    var phonenumber = document.getElementById("phonenumber-"+id).value;
+	    var address = document.getElementById("address-"+id).value;
+        var role = button.parentNode.previousElementSibling.querySelector(".roleSelect");
+        if(fullname.trim()===""){
+			 event.preventDefault(); 
+	 	    document.getElementById("erro-ten").innerHTML ="Hãy điền tên mặt hàng.";
+	 	    return;
+		}
+        if(fullname.trim()===""){
+			 event.preventDefault(); 
+	 	    document.getElementById("erro-ten").innerHTML ="Hãy điền tên mặt hàng.";
+	 	    return;
+		}
+		
+	    // Hiển thị cảnh báo
+        var isConfirmed = confirm("Sửa thông tin?");
+          var contextPath="<c:out value='${pageContext.request.contextPath}' />";
+
+        // Nếu người dùng nhấn OK (đồng ý), thực hiện xóa
+        if (isConfirmed) {
+        	  // Chuyển hướng đến URL
+        	window.location.href = contextPath + "/edituser?id="+id+"&fullname="+fullname+"&username="+username+"&email="+email+"&phonenumber="+phonenumber+"&address="+address+"&role="+role.value;
+        }
+        //window.location.href =contextPath+"/filterbyprice?key="+value;
+	}
+	function deleteUser(id) {
+	 
+        var isConfirmed = confirm("Xóa tài khoản?");
+          var contextPath="<c:out value='${pageContext.request.contextPath}' />";
+
+        // Nếu người dùng nhấn OK (đồng ý), thực hiện xóa
+        if (isConfirmed) {
+        	  // Chuyển hướng đến URL
+        	window.location.href = contextPath + "/deleteuser?id="+id;
+        }
+        //window.location.href =contextPath+"/filterbyprice?key="+value;
+	}
+</script>

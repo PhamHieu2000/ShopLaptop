@@ -1,0 +1,296 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Category;
+import model.Product;
+
+public class ProductDao {
+	public static List<Product> getAllProduct() {
+		List<Product> listProduct=new ArrayList<>();
+		try {
+			Connection connection=DBConnection.connection();
+			String sql="SELECT * FROM product";
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			ResultSet rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				Product product=new Product();
+				product.setId(rs.getInt(1));
+				product.setName(rs.getString(2));
+				product.setShort_description(rs.getString(3));
+				product.setPrice(rs.getLong(4));
+				product.setDiscount(rs.getLong(5));
+				product.setQuantity(rs.getInt(6));
+				product.setDescription(rs.getString(7));
+				product.setIs_featured(rs.getInt(8));
+				product.setStatus(rs.getInt(9));
+				product.setCreate_at(LocalDate.parse((rs.getDate(10)).toString()));
+				product.setUpdate_at(LocalDate.parse((rs.getDate(11)).toString()));
+				product.setCategory_id(rs.getInt(12));
+				product.setThumbnail(rs.getString(13));
+				listProduct.add(product);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listProduct;
+		
+	}
+	
+	
+	public static boolean addProduct(Product product){
+		try {
+			Connection connection=DBConnection.connection();
+			String sql="INSERT INTO product ( name_product,short_description, price, discount, quantity, product_description,is_featured, status,create_at,update_at, category_id,thumbail) "
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1,product.getName());
+			preparedStatement.setString(2,product.getShort_description());
+			preparedStatement.setLong(3,product.getPrice());
+			preparedStatement.setLong(4,product.getDiscount());
+			preparedStatement.setInt(5,product.getQuantity());
+			preparedStatement.setString(6,product.getDescription());
+			preparedStatement.setInt(7,product.getIs_featured());
+			preparedStatement.setInt(8,product.getStatus());
+			preparedStatement.setDate(9, Date.valueOf(product.getCreate_at()));
+	        preparedStatement.setDate(10, Date.valueOf(product.getUpdate_at()));
+			preparedStatement.setInt(11,product.getCategory_id());
+			preparedStatement.setString(12,product.getThumbnail());
+
+			return preparedStatement.executeUpdate()==1;			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+		
+		
+	}
+	public static boolean updateProduct(Product product){
+		try {
+			Connection connection=DBConnection.connection();
+			String sql="UPDATE product SET name_product=?,short_description=?,price=?,discount=?,quantity=?,product_description=?,update_at=?,category_id=?,thumbail=? where product_id=? ";
+				
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1,product.getName());
+			preparedStatement.setString(2,product.getShort_description());
+			preparedStatement.setLong(3,product.getPrice());
+			preparedStatement.setLong(4,product.getDiscount());
+			preparedStatement.setInt(5,product.getQuantity());
+			preparedStatement.setString(6,product.getDescription());
+	        preparedStatement.setDate(7, Date.valueOf(product.getUpdate_at()));
+			preparedStatement.setInt(8,product.getCategory_id());
+			preparedStatement.setString(9,product.getThumbnail());
+			preparedStatement.setInt(10,product.getId());
+
+			return preparedStatement.executeUpdate()==1;			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+		
+		
+	}
+
+	public static Product getProductById(int id) {
+		try {
+			Connection connection=DBConnection.connection();
+			String sql="SELECT * FROM product where product_id="+id;
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			ResultSet rs=preparedStatement.executeQuery();
+			Product product=new Product();
+			if(rs.next()) {
+				product.setId(rs.getInt(1));
+				product.setName(rs.getString(2));
+				product.setShort_description(rs.getString(3));
+				product.setPrice(rs.getLong(4));
+				product.setDiscount(rs.getLong(5));
+				product.setQuantity(rs.getInt(6));
+				product.setDescription(rs.getString(7));
+				product.setIs_featured(rs.getInt(8));
+				product.setStatus(rs.getInt(9));
+				product.setCreate_at(LocalDate.parse((rs.getDate(10)).toString()));
+				product.setUpdate_at(LocalDate.parse((rs.getDate(11)).toString()));
+				product.setCategory_id(rs.getInt(12));
+				product.setThumbnail(rs.getString(13));
+				
+			}
+			return product;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	public static List<Product> getProductByCategoryId(int category_id) {
+		List<Product> listProduct=new ArrayList<>();
+		try {
+			Connection connection=DBConnection.connection();
+			String sql="SELECT * FROM product where category_id="+category_id;
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			ResultSet rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				Product product=new Product();
+				product.setId(rs.getInt(1));
+				product.setName(rs.getString(2));
+				product.setShort_description(rs.getString(3));
+				product.setPrice(rs.getLong(4));
+				product.setDiscount(rs.getLong(5));
+				product.setQuantity(rs.getInt(6));
+				product.setDescription(rs.getString(7));
+				product.setIs_featured(rs.getInt(8));
+				product.setStatus(rs.getInt(9));
+				product.setCreate_at(LocalDate.parse((rs.getDate(10)).toString()));
+				product.setUpdate_at(LocalDate.parse((rs.getDate(11)).toString()));
+				product.setCategory_id(rs.getInt(12));
+				product.setThumbnail(rs.getString(13));
+				listProduct.add(product);
+				
+			}
+			System.out.println(listProduct);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listProduct;
+		
+	}
+	//Phương thức xóa loại sản phẩm
+		public void delete(int id) {
+			Connection conn = DBConnection.connection();
+			String sql = "delete from product where product_id = ?";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, id);
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		public static List<Product> getProductBestSeller(int category_id) {
+			List<Product> listProduct=new ArrayList<>();
+			try {
+				String sql="";
+				Connection connection=DBConnection.connection();
+				if(category_id==0){
+					sql="WITH RankedProducts AS (\r\n"
+						+ "  SELECT\r\n"
+						+ "    p.*,\r\n"
+						+ "    c.name_category,\r\n"
+						+ "    ROW_NUMBER() OVER (PARTITION BY p.category_id ORDER BY od.total DESC) AS product_rank\r\n"
+						+ "  FROM\r\n"
+						+ "    product p\r\n"
+						+ "    INNER JOIN order_detail od ON p.product_id = od.product_id\r\n"
+						+ "    INNER JOIN orders o ON od.order_id = o.order_id\r\n"
+						+ "    INNER JOIN category c ON p.category_id = c.category_id\r\n"
+						+ "  WHERE\r\n"
+						+ "    o.status = 2 -- Assuming status = 2 represents a completed order\r\n"
+						+ ")\r\n"
+						+ "SELECT\r\n"
+						+ "  product_id,\r\n"
+						+ "  name_product,\r\n"
+						+ "  price,\r\n"
+						+ "  discount,\r\n"
+						+ "  quantity,\r\n"
+						+ "  short_description,\r\n"
+						+ "  product_description,\r\n"
+						+ "  is_featured,\r\n"
+						+ "  status,\r\n"
+						+ "  create_at,\r\n"
+						+ "  update_at,\r\n"
+						+ "  category_id,\r\n"
+						+ "   thumbail,\r\n"
+						+ "  name_category,\r\n"
+						+ "  product_rank\r\n"
+						+ " \r\n"
+						+ "FROM\r\n"
+						+ "  RankedProducts\r\n"
+						+ "WHERE\r\n"
+						+ "  product_rank <= 3;\r\n";}
+				if(category_id!=0){
+					sql="WITH RankedProducts AS (\r\n"
+						+ "  SELECT\r\n"
+						+ "    p.*,\r\n"
+						+ "    c.name_category,\r\n"
+						+ "    ROW_NUMBER() OVER (PARTITION BY p.category_id ORDER BY od.total DESC) AS product_rank\r\n"
+						+ "  FROM\r\n"
+						+ "    product p\r\n"
+						+ "    INNER JOIN order_detail od ON p.product_id = od.product_id\r\n"
+						+ "    INNER JOIN orders o ON od.order_id = o.order_id\r\n"
+						+ "    INNER JOIN category c ON p.category_id = c.category_id\r\n"
+						+ "  WHERE\r\n"
+						+ "    o.status = 2 -- Assuming status = 2 represents a completed order\r\n"
+						+ ")\r\n"
+						+ "SELECT\r\n"
+						+ "  product_id,\r\n"
+						+ "  name_product,\r\n"
+						+ "  price,\r\n"
+						+ "  discount,\r\n"
+						+ "  quantity,\r\n"
+						+ "  short_description,\r\n"
+						+ "  product_description,\r\n"
+						+ "  is_featured,\r\n"
+						+ "  status,\r\n"
+						+ "  create_at,\r\n"
+						+ "  update_at,\r\n"
+						+ "  category_id,\r\n"
+						+ "   thumbail,\r\n"
+						+ "  name_category,\r\n"
+						+ "  product_rank\r\n"
+						+ " \r\n"
+						+ "FROM\r\n"
+						+ "  RankedProducts\r\n"
+						+ "WHERE\r\n"
+						+ "  product_rank <= 3 and category_id=?;";}
+				PreparedStatement preparedStatement=connection.prepareStatement(sql);
+				if(category_id!=0) {
+					preparedStatement.setInt(1, category_id);
+				}
+				ResultSet rs=preparedStatement.executeQuery();
+				while(rs.next()) {
+					Product product=new Product();
+					product.setId(rs.getInt("product_id"));
+					product.setName(rs.getString("name_product"));
+					product.setShort_description(rs.getString("short_description"));
+					product.setPrice(rs.getLong("price"));
+					product.setDiscount(rs.getLong("discount"));
+					product.setQuantity(rs.getInt("quantity"));
+					product.setDescription(rs.getString("product_description"));
+					product.setIs_featured(rs.getInt("is_featured"));
+					product.setStatus(rs.getInt("status"));
+					product.setCreate_at(LocalDate.parse((rs.getDate("create_at")).toString()));
+					product.setUpdate_at(LocalDate.parse((rs.getDate("update_at")).toString()));
+					product.setCategory_id(rs.getInt("category_id"));
+					product.setThumbnail(rs.getString("thumbail"));
+					listProduct.add(product);
+					
+				}
+				System.out.println(listProduct);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return listProduct;
+			
+		}
+	
+}

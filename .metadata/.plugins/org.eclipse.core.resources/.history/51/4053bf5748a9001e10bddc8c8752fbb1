@@ -1,0 +1,13 @@
+package model;
+
+public class OrderDetail {
+	private int id;
+	private double price;
+	private int quantity;
+	private double total;
+	private int product_id;
+	private int order_id;
+	private int status;
+	
+	
+}

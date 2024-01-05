@@ -1,0 +1,29 @@
+package controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dao.WishlistDao;
+import model.Wishlist;
+@WebServlet(urlPatterns = {"/add_wishlist"})
+public class AddWishListController extends HttpServlet {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		WishlistDao wishlistDao=new WishlistDao();
+		Wishlist wishlist=new Wishlist();
+		int product_id=Integer.parseInt(req.getParameter("id"));
+		int user_id=Integer.parseInt(req.getParameter("user_id"));
+		wishlist.setProduct_id(product_id);
+		wishlist.setUser_id(user_id);
+		wishlistDao.insert(wishlist);
+		  // Chuyển hướng request về trang hiện tại
+	    String destination = req.getRequestURI();
+	    RequestDispatcher dispatcher = req.getRequestDispatcher(destination);
+	}
+}

@@ -1,0 +1,27 @@
+package controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dao.ProductDao;
+import model.Product;
+@WebServlet(urlPatterns = {"/filterbyprice"})
+
+public class FilterProductByName extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String key=req.getParameter("key");
+		ProductDao productDao=new ProductDao();
+		List<Product> products=new ArrayList<>();
+		products=productDao.getProductByName(key);listProduct
+		req.getRequestDispatcher("/views/client/wishlist.jsp").forward(req, resp);
+
+	}
+}

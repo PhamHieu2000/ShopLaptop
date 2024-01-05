@@ -1,0 +1,30 @@
+package controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dao.FeedbackDao;
+import dao.ProductDao;
+import model.Feedback;
+import model.Product;
+@WebServlet(urlPatterns = {"/product"})
+
+public class ShowProductController extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Product product=ProductDao.getProductById(Integer.parseInt( req.getParameter("id")));
+		req.setAttribute("product", product);
+		List<Feedback> feedbacks=new ArrayList<>();
+		FeedbackDao feedbackDao=new FeedbackDao();
+		feedbacks=feedbackDao.getAllByProductId(product.getId())
+		req.getRequestDispatcher("/views/client/product.jsp").forward(req, resp);
+		
+	}
+}

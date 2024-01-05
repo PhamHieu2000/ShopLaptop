@@ -1,0 +1,30 @@
+package model;
+
+public class Cart extends Product{
+	private int quantityCart;//số lượng
+	public int getQuantityCart() {
+		return quantityCart;
+	}
+	public void setQuantityCart(int quantity) {
+		this.quantityCart = quantityCart;
+	}
+	public Cart() {
+		super();
+	}
+	public Cart(int quantityCart) {
+		super();
+		this.quantityCart = quantityCart;
+	}
+	@Override
+	public String toString() {
+		return "Cart [quantityCart=" + quantityCart + ", getquantityCart()=" + getQuantityCart() + ", getId()="
+				+ getId() + ", getName()=" + getName() + ", getShort_description()=" + getShort_description()
+				+ ", getPrice()=" + getPrice() + ", getDiscount()=" + getDiscount() + ", getQuantity()=" + getQuantity()
+				+ ", getThumbnail()=" + getThumbnail() + ", getDescription()=" + getDescription()
+				+ ", getIs_featured()=" + getIs_featured() + ", getStatus()=" + getStatus() + ", getCategory_id()="
+				+ getCategory_id() + ", getCreate_at()=" + getCreate_at() + ", getUpdate_at()=" + getUpdate_at()
+				+ ", toString()=" + super.toString() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ "]";
+	}
+	
+}

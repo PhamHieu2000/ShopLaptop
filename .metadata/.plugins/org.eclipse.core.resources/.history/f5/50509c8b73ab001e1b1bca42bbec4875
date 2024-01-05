@@ -1,0 +1,75 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Feedback;
+import model.Order;
+
+public class FeedbackDao {
+
+	//Phương thức lấy toàn bộ order
+			public List<Order> getAll(){
+				List<Order> orders = new ArrayList<Order>();
+				Connection conn = DBConnection.connection();
+				String sql = "select * from feedback";
+				try {
+					PreparedStatement ps = conn.prepareStatement(sql);
+					ResultSet rs = ps.executeQuery();
+					while(rs.next()) {
+						Feedback order = new Feedback();
+						order.setId(rs.getInt("feedback_id"));
+						order.setMessage(rs.getString("feedback_name"));
+						order.setEmail(rs.getString("email"));
+						order.setSubject(rs.getString("phonenumber"));
+						order.setAddress(rs.getString("address"));
+						order.setNote(rs.getString("note"));
+						order.setOrderdate(LocalDate.parse(( rs.getDate("orderdate").toString())));
+						order.setStatus(rs.getInt("status"));
+						order.setTotal(rs.getDouble("total"));
+						order.setUser_id(rs.getInt("user_id"));
+						orders.add(order);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(orders);
+				return orders;
+			}
+	
+			/*
+			 * @Override public void delete(int id) { String sql =
+			 * "DELETE FROM review WHERE id=?"; Connection con = connectDB.getConnect(); try
+			 * { PreparedStatement ps = con.prepareStatement(sql); ps.setInt(1, id);
+			 * ps.executeUpdate(); } catch (SQLException e) { e.printStackTrace(); } }
+			 * 
+			 * @Override public Review get(int id) { // TODO Auto-generated method stub
+			 * return null; }
+			 * 
+			 * @Override public Review get(String name) { // TODO Auto-generated method stub
+			 * return null; }
+			 * 
+			 * 
+			 * 
+			 * @Override public List<Review> getReviewById(int id) { List<Review> reviews =
+			 * new ArrayList<Review>(); String sql =
+			 * "SELECT * FROM review WHERE product_id=?"; Connection con =
+			 * connectDB.getConnect(); try { PreparedStatement ps =
+			 * con.prepareStatement(sql); ps.setInt(1, id); ResultSet rs =
+			 * ps.executeQuery();
+			 * 
+			 * while(rs.next()) { Review review = new Review();
+			 * review.setId(rs.getString("id")); review.setName(rs.getString("name"));
+			 * review.setEmail(rs.getString("email"));
+			 * review.setProduct_id(rs.getString("product_id"));
+			 * review.setContent(rs.getString("content"));
+			 * review.setCreated(rs.getString("created")); reviews.add(review); } } catch
+			 * (SQLException e) { e.printStackTrace(); } return reviews; }
+			 */
+}

@@ -1,0 +1,11 @@
+package dto;
+
+public class WishlistProductDto {
+	int wishlist_id;
+	int product_id;
+	int user_id;
+	String name_product;
+	Long price;
+	Long discount;
+	int category-id;
+}

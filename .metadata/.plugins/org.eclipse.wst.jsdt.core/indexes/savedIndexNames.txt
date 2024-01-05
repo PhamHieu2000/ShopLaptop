@@ -1,0 +1,11 @@
+INDEX VERSION 1.4+C:\ITPLUS\ShopLaptop\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3300056768.index
+2739899652.index
+3080908238.index
+3533977438.index
+1333808810.index
+1243810052.index
+527921258.index
+3132073962.index
+2318944357.index
+3300056768.index

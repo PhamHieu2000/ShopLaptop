@@ -1,0 +1,27 @@
+package dto;
+
+import java.time.LocalDate;
+
+public class OrderDetailDto {
+	int id;
+	int product_id;
+	long price;
+	int quantity;
+	long total;
+	int order_id;
+	int user_id;
+	LocalDate orderDate;
+	int status_order;
+	String name_product;
+	String thumbail;
+	String fullname;
+	String numberphone;
+	String address;
+	String email;
+	String total_order;
+	public OrderDetailDto() {
+		super();
+	}
+	
+	
+}

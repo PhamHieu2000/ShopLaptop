@@ -1,0 +1,50 @@
+package controller;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.CategoryDao;
+import dao.ProductDao;
+import model.Category;
+import model.Product;
+
+@WebServlet(urlPatterns = {"/home"})
+public class HomeCategoryController extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Category> listCategory=new ArrayList<>();
+		List<Product> listProduct =new ArrayList<>();
+		List<Product> productBestseller =new ArrayList<>();
+		List<Product> productNew =new ArrayList<>();
+
+		CategoryDao categoryDao=new CategoryDao();
+		ProductDao productDao=new ProductDao();
+		
+		//Lọc sản phẩm mới nhất(7 ngày)
+		LocalDate checkdate=LocalDate.now();
+		for(Product product: listProduct) {
+			
+		}
+		
+		listCategory=categoryDao.getAllCategory();
+		listProduct=productDao.getAllProduct();
+		System.out.println("best seller");
+		productBestseller=productDao.getProductBestSeller(0);
+		req.setAttribute("bestSeller", productBestseller);
+
+		req.setAttribute("listProduct", listProduct);
+		HttpSession session = req.getSession();
+		session.setAttribute("listCategory", listCategory);
+		req.getRequestDispatcher("/views/client/index.jsp").forward(req, resp);
+	}
+}

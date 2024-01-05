@@ -1,0 +1,40 @@
+package controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dao.ProductDao;
+import model.Cart;
+import model.Product;
+@WebServlet(urlPatterns = {"/add_cart"})
+
+public class AddToCartController extends HttpServlet{
+	List<Cart> listCart= new ArrayList<>();
+	int quantity=1;
+		@Override
+		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			int product_id=Integer.parseInt(req.getParameter("product_id"));
+			ProductDao productDao=new ProductDao();
+			Product product= productDao.getProductById(product_id);
+			Cart cart=new Cart();
+			cart.setId(product.getId());
+			cart.setName(product.getName());
+			cart.setShort_description(product.getShort_description());
+			cart.setThumbnail(product.getThumbnail());
+			cart.setPrice(product.getPrice());
+			cart.setDiscount(product.getId());
+			cart.setId(product.getId());
+			cart.setId(product.getId());
+			cart.setId(product.getId());
+			cart.setId(product.getId());
+
+			
+		}
+}

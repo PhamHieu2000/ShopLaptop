@@ -1,0 +1,19 @@
+package dao;
+
+public class CartDao {
+	private int quantity;//số lượng
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public Cart() {
+		super();
+	}
+	public Cart(int quantity) {
+		super();
+		this.quantity = quantity;
+	}
+	
+}

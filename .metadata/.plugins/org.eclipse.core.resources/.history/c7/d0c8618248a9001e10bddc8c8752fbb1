@@ -1,0 +1,211 @@
+<%@page import="model.User"%>
+<%@page import="model.Cart"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:url value="/views/client" var="url"></c:url>
+<%
+	User user = (User)session.getAttribute("user");
+	request.setAttribute("user", user);
+	List<Cart> listCart = (List<Cart>)session.getAttribute("listCart");
+	request.setAttribute("listCart", listCart);
+	long total=0;
+	if(listCart != null){	for(Cart cart : listCart){
+		total=total+(cart.getDiscount()*cart.getQuantityCart());
+	}
+}
+	request.setAttribute("total", total);
+
+%>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Electro - HTML Ecommerce Template</title>
+
+ 		<!-- Google font -->
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+ 		<!-- Bootstrap -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/bootstrap.min.css"/>
+
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/slick.css"/>
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/slick-theme.css"/>
+
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/nouislider.min.css"/>
+
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="${url}/css/font-awesome.min.css">
+
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="${url}/css/style.css"/>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    </head>
+	<body>
+				<jsp:include page="fragment/nevbar.jsp"></jsp:include>
+			
+		<!-- SECTION -->
+		<form id="form-addorder" method="post" action="${pageContext.request.contextPath}/addorder" >
+
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					
+					<div class="col-md-7">
+						<!-- Billing Details -->
+						<div class="billing-details">
+							<div class="section-title">
+								<h3 class="title">Địa chỉ nhận hàng</h3>
+							</div>
+								<c:if test="${user == null}">
+									<input class="input" type="number" name="userId" value=null hidden >
+									</c:if>
+									<c:if test="${user != null}">
+									<input class="input" type="number" name="userId" value="${user.id }" hidden >
+										
+									</c:if>
+									<div class="form-group">
+									
+									
+									<c:if test="${user == null}">
+   										<input class="input" type="text" name="name-user" placeholder="Họ và tên">
+									</c:if>
+									<c:if test="${user != null}">
+										<input class="input" type="text" name="name-user" value="${user.fullname }" placeholder="Họ và tên">
+										
+									</c:if>
+									</div>
+									
+									<div class="form-group">
+										<c:if test="${user == null}">
+										<input class="input" type="email" name="email" placeholder="Email">
+									</c:if>
+									<c:if test="${user != null}">
+										<input class="input" type="email" name="email" value="${user.email }" placeholder="Email">
+										
+									</c:if>
+									</div>
+									<div class="form-group">
+										<c:if test="${user == null}">
+										<input class="input" type="text" name="address" placeholder="Địa chỉ">
+									</c:if>
+									<c:if test="${user != null}">
+										<input class="input" type="text" name="address" value="${user.address }" placeholder="Địa chỉ">
+										
+									</c:if>
+									</div>
+								
+									<div class="form-group">
+										<c:if test="${user == null}">
+										<input class="input" type="tel" name="tel" placeholder="Số điện thoại">
+									</c:if>
+									<c:if test="${user != null}">
+										<input class="input" type="tel" value="${user.phonenumber }" name="tel" placeholder="Số điện thoại">
+										
+									</c:if>
+									</div>
+								
+						</div>
+						<!-- /Billing Details -->
+
+						<!-- Order notes -->
+						<div class="order-notes">
+							<textarea class="input" name="note" placeholder="Ghi chú"></textarea>
+						</div>
+						<!-- /Order notes -->
+					</div>
+
+					<!-- Order Details -->
+					
+					<div class="col-md-5 order-details">
+						<div class="section-title text-center">
+							<h3 class="title">Đơn hàng của bạn</h3>
+						</div>
+						<div class="order-summary">
+							<div class="order-col">
+								<div><strong>Sản phẩm</strong></div>
+								<div><strong>Thành tiền</strong></div>
+							</div>
+							<div class="order-products">
+							<c:forEach var="listCart" items="${listCart}">
+							
+								<div class="order-col">
+									<div>${listCart.quantityCart }x ${listCart.name }</div>
+									<div>${listCart.quantityCart*listCart.discount}</div>
+								</div>
+								</c:forEach>
+							</div>
+							<div class="order-col">
+								<div>Phí giao hàng</div>
+								<div><strong>MIỄN PHÍ</strong></div>
+							</div>
+							<input hidden class="input" type="number" name="totalOrder" value="${total}">
+							
+							<div class="order-col">
+								<div><strong>Tổng tiền</strong></div>
+								<div><strong name="total" class="order-total">${total}</strong></div>
+							</div>
+						</div>
+						
+						<div style="display:flex;justify-content:end">
+							<button type="submit" onclick="addOrderDetail()" class="primary-btn order-submit">Đặt hàng</button>
+						</div>
+					</div>
+					</form>
+					<!-- /Order Details -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+			
+				<jsp:include page="fragment/footer.jsp"></jsp:include>
+				
+
+</body>
+</html>
+<script>
+    // Bắt đầu sự kiện submit của form
+    document.getElementById('form-addorder').addEventListener('submit', function (event) {
+    	console.log("abcabc")
+       var user="<c:out value='${user}' />";
+
+		if(user == null){
+			alert("Hãy đăng nhập tài khoản để đặt hàng");	
+			 // Ngăn chặn hành vi mặc định của form
+	        event.preventDefault();
+
+		}else {
+			alert("Đặt đơn hàng thành công");	
+		}
+    });
+    function addOrderDetail() {
+    	<%
+    	
+    	List<Cart> list = (List<Cart>)session.getAttribute("listCart");
+    	if(list != null || list.size() > 0){	
+    		for(Cart cart :list){
+			
+		}    	
+}
+	
+    %>
+	}
+</script>
